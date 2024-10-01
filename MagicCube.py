@@ -37,21 +37,51 @@ class MagicCube():
         sum_violated += np.sum(num_pillar != target)
         
         #check half diagonal for XY start = 0
-        for j in range(self.n): 
+        for i in range(self.n): 
             num_diag1 = 0
-            for k in range(self.n):
-                num_diag1 += self.cube[j][k][k]
+            for j in range(self.n):
+                num_diag1 += self.cube[i][j][j]
             sum_violated += (num_diag1 != target)
         '''TO DO'''
         #check half diagonal for XY start = 5
+        for i in range(self.n):
+            num_diag1 = 0
+            for j in range(self.n-1, -1, -1):
+                num_diag1 += self.cube[i][j][j]
+            # print("baris ke : ", i , "=", num_diag1)
+            sum_violated += (num_diag1 != target)
         
         #check half diagonal for XZ start = 0
+        for i in range(self.n):
+            num_diag2 = 0
+            for j in range(self.n):
+                num_diag2 += self.cube[j][i][j]
+            # print(num_diag2)
+            sum_violated += (num_diag2 != target)
         
         #check half diagonal for XZ start = 5
-        
+        for i in range(self.n):
+            num_diag2 = 0
+            for j in range(self.n-1, -1, -1):
+                num_diag2 += self.cube[j][i][j]
+            # print(num_diag2)
+            sum_violated += (num_diag2 != target)
+            
         #check half diagonal for YZ start = 0
+        for i in range(self.n):
+            num_diag3 = 0
+            for j in range(self.n):
+                num_diag3 += self.cube[j][j][i]
+            # print(num_diag3)
+            sum_violated += (num_diag3 != target)
         
         #check half diagonal for YZ start = 5
+        for i in range(self.n):
+            num_diag3 = 0
+            for j in range(self.n-1, -1, -1):
+                num_diag3 += self.cube[j][j][i]
+            # print(num_diag3)
+            sum_violated += (num_diag3 != target)
         
         #check triagonal (expected 4)
         

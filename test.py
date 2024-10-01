@@ -6,10 +6,12 @@ n = 5
 M = MagicCube(n)
 # M.RandCube()
 
-print(M.cube)
+# print(M.cube)
 # np.flip(M.cube)
 # print(M.cube)
+
 print(M.checkCube())
+# 24 + 24 + 24 + (4x6) = 96 without triagonal
 
 # x = np.array([
 #    [ [1,2], [3,4] ],
