@@ -19,7 +19,32 @@ class MagicCube():
         self.cube = np.random.permutation(range(1, self.n**3+1)).reshape(self.n, self.n, self.n)
 
     #objective function
-    def checkCube(cube):
-        return 0
+    def checkCube(self):
+        sum_violated = 0
+        #check magic constant
+        target = (self.n * (self.n**3 + 1))/2
+        
+        #check col
+        num_col = np.sum(self.cube, axis = 2)
+        sum_violated += np.sum(num_col != target)
+        
+        #check row
+        num_row = np.sum(self.cube, axis = 1)
+        sum_violated += np.sum(num_row != target)
+        
+        #check pillar
+        num_pillar = np.sum(self.cube, axis = 0)
+        sum_violated += np.sum(num_pillar != target)
+        
+        #check half diagonal for XY n=5
+        for j in range(self.n): 
+            num_diag1 = 0
+            for k in range(self.n):
+                num_diag1 += self.cube[j][k][k]
+            print(num_diag1)
+            sum_violated += (num_diag1 != target)
+                
+        return sum_violated
+                    
     
     ### TO DO ###
