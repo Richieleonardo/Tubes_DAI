@@ -36,6 +36,7 @@ class MagicCube():
         num_pillar = np.sum(self.cube, axis = 0)
         sum_violated += np.sum(num_pillar != target)
         
+        '''gw ga tau pake numpy kalo diagonal, np.trace GA PWAHAMMMM. Jadi looping bae'''
         #check half diagonal for XY start = 0
         for i in range(self.n): 
             num_diag1 = 0
