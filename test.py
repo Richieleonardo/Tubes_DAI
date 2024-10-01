@@ -6,7 +6,7 @@ n = 5
 M = MagicCube(n)
 # M.RandCube()
 
-# print(M.cube)
+print(M.cube)
 # np.flip(M.cube)
 # print(M.cube)
 

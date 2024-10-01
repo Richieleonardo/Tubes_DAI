@@ -22,7 +22,7 @@ class MagicCube():
     def checkCube(self):
         sum_violated = 0
         #check magic constant
-        target = (self.n * (self.n**3 + 1))/2
+        target = (self.n * (self.n**3 + 1))/2 # magic constant is 315
         
         #check col
         num_col = np.sum(self.cube, axis = 2)
@@ -91,3 +91,8 @@ class MagicCube():
                     
     
     ### TO DO ###
+    def getNeighbour(self):
+        
+        x1, y1, z1, x2, y2, z2 = np.random.randint(low = 0, high = self.n, size = 6)
+        self.cube[x1][y1][z1], self.cube[x2][y2][z2] = self.cube[x2][y2][z2], self.cube[x1][y1][z1]
+        
