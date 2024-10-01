@@ -25,16 +25,28 @@ class MagicCube():
         target = (self.n * (self.n**3 + 1))/2
         
         #check col
-        num_col = np.sum(self.cube, axis = 2)
-        sum_violated += np.sum(num_col != target)
+        for i in range (self.n) :
+            for j in range (self.n) : 
+                sum_each_column = 0
+                for k in range (self.n) :
+                    sum_each_column += self.cube[i][j][k]
+                sum_violated += (sum_each_column != target)
         
         #check row
-        num_row = np.sum(self.cube, axis = 1)
-        sum_violated += np.sum(num_row != target)
+        for i in range (self.n) :
+            for j in range (self.n) : 
+                sum_each_row = 0
+                for k in range (self.n) :
+                    sum_each_row += self.cube[i][k][j]
+                sum_violated += (sum_each_row != target)
         
         #check pillar
-        num_pillar = np.sum(self.cube, axis = 0)
-        sum_violated += np.sum(num_pillar != target)
+        for i in range (self.n) :
+            for j in range (self.n) : 
+                sum_each_pillar = 0
+                for k in range (self.n) :
+                    sum_each_pillar += self.cube[k][i][j]
+                sum_violated += (sum_each_pillar != target)
         
         '''gw ga tau pake numpy kalo diagonal, np.trace GA PWAHAMMMM. Jadi looping bae'''
         #check half diagonal for XY start = 0
