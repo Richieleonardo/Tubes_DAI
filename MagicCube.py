@@ -97,8 +97,30 @@ class MagicCube():
             sum_violated += (num_diag3 != target)
         
         '''TO DO'''
-        #check triagonal (expected 4)
-        
+        #check triagonal (1) - (0,0,0) -> (n-1,n-1,n-1)
+        sum_triagonal1 = 0
+        for i in range (self.n) :
+            sum_triagonal1 += self.cube[i][i][i]
+        sum_violated += (sum_triagonal1 != target)
+
+        #check triagonal (2) - (0,0,n-1) -> (n-1,n-1,0)
+        sum_triagonal2 = 0
+        for i in range (self.n) :
+            sum_triagonal2 += self.cube[i][i][(self.n-1)-i]
+        sum_violated += (sum_triagonal2 != target)
+
+        #check triagonal (3) - (0,n-1,n-1) -> (n-1,0,0)
+        sum_triagonal3 = 0
+        for i in range (self.n) :
+            sum_triagonal3 += self.cube[i][(self.n-1)-i][(self.n-1)-i]
+        sum_violated += (sum_triagonal3 != target)
+
+        #check triagonal (4) - (0,n-1,0) -> (n-1,0,n-1)
+        sum_triagonal4 = 0
+        for i in range (self.n) :
+            sum_triagonal4 += self.cube[i][(self.n-1)-i][i]
+        sum_violated += (sum_triagonal4 != target)
+
         return sum_violated
                     
     
