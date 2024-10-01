@@ -36,14 +36,25 @@ class MagicCube():
         num_pillar = np.sum(self.cube, axis = 0)
         sum_violated += np.sum(num_pillar != target)
         
-        #check half diagonal for XY n=5
+        #check half diagonal for XY start = 0
         for j in range(self.n): 
             num_diag1 = 0
             for k in range(self.n):
                 num_diag1 += self.cube[j][k][k]
-            print(num_diag1)
             sum_violated += (num_diag1 != target)
-                
+        '''TO DO'''
+        #check half diagonal for XY start = 5
+        
+        #check half diagonal for XZ start = 0
+        
+        #check half diagonal for XZ start = 5
+        
+        #check half diagonal for YZ start = 0
+        
+        #check half diagonal for YZ start = 5
+        
+        #check triagonal (expected 4)
+        
         return sum_violated
                     
     
