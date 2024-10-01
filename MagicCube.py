@@ -42,7 +42,7 @@ class MagicCube():
             for j in range(self.n):
                 num_diag1 += self.cube[i][j][j]
             sum_violated += (num_diag1 != target)
-        '''TO DO'''
+            
         #check half diagonal for XY start = 5
         for i in range(self.n):
             num_diag1 = 0
@@ -83,6 +83,7 @@ class MagicCube():
             # print(num_diag3)
             sum_violated += (num_diag3 != target)
         
+        '''TO DO'''
         #check triagonal (expected 4)
         
         return sum_violated
