@@ -5,7 +5,7 @@ Magic Cube
 import numpy as np
 
 # Magic Cube object of n x n x n range 1, n**3
-class MagicCube():
+class MagicCube(object):
     
     #Membuat cube berurutan
     def __init__(self, n):
@@ -125,11 +125,37 @@ class MagicCube():
                     
     
     ### TO DO ###
-    def getNeighbour(self):
+    def oneD_Cube(self):
+        return self.cube.flatten()
+    
+    def getNeighbour(self,mode, x1 = None, x2 = None, n = 1): #get at least 10 candidate and pick the best one
         neighbour = MagicCube(self.n)
-        neighbour = self.cube.copy()
-        x1, y1, z1, x2, y2, z2 = np.random.randint(low = 0, high = self.n, size = 6)
-        neighbour[x1][y1][z1], neighbour[x2][y2][z2] = neighbour[x2][y2][z2], neighbour[x1][y1][z1]
+        neighbour.cube = self.cube.copy()
         
-        return neighbour
+        flat_cube = neighbour.oneD_Cube()
+        #Swap or check specific neighbour
+        if mode == "check":
+            # for i in range(len(flat_cube)-1):
+            #     for j in range(i+1, len(flat_cube), 1):
+            flat_cube[x1], flat_cube[x2] = flat_cube[x2], flat_cube[x1]
+            neighbour.cube = flat_cube.reshape(self.n, self.n, self.n)
+            return neighbour
+        #else get random candidate
+        else:
+            candidate = []
+            for i in range(n):
+                x1, x2= np.random.randint(low = 0, high = self.n**3, size = 2)
+                # neighbour.cube[z1][y1][x1], neighbour.cube[z2][y2][x2] = neighbour.cube[z2][y2][x2], neighbour.cube[z1][y1][x1]
+                flat_cube[x1], flat_cube[x2] = flat_cube[x2], flat_cube[x1]
+                threeD_cube = flat_cube.reshape(self.n, self.n, self.n)
+                neighbour.cube = threeD_cube
+                # candidate.append(neighbour)
+                if not candidate:
+                    candidate.append(neighbour)
+                else:    
+                    for i in range(len(candidate)):
+                        if neighbour.checkCube() < candidate[i].checkCube():
+                            candidate.insert(i, threeD_cube)
+            return candidate[0]
+        
         
