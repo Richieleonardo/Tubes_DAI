@@ -11,6 +11,7 @@ class HillClimbing:
     def run(self, currentstate):
         i = 0
         current = currentstate
+        print("Current initial state violation : \n", current.checkCube())
         while i < self.iteration:
             if(current.checkCube() == 0):
                 break
@@ -18,8 +19,9 @@ class HillClimbing:
             if neighbour.checkCube() >= current.checkCube():
                 break
             current = neighbour
+            
             i += 1
-        
+        print("Final state violation : \n", current.checkCube())
         return current
             
             
