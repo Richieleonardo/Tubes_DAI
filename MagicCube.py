@@ -128,7 +128,7 @@ class MagicCube(object):
     def oneD_Cube(self):
         return self.cube.flatten()
     
-    def getNeighbour(self,mode, x1 = None, x2 = None, n = 1): #get at least 10 candidate and pick the best one
+    def getNeighbour(self, mode, x1 = None, x2 = None, n = 1): #get neighbor by swapping elements in cube
         neighbour = MagicCube(self.n)
         neighbour.cube = self.cube.copy()
         

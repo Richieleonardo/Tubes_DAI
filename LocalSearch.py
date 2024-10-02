@@ -29,14 +29,6 @@ class HillClimbing(object):
                     if neighbour_violation < lowest_violation:
                         lowest_violation = neighbour_violation
                         candidate = neighbour
-                    # if not violation_list: #if array empty
-                    #     violation_list.append(neighbour_violation)
-                    #     candidate = neighbour
-                    # else:
-                    #     for k in range(len(violation_list)):           
-                    #         if(neighbour_violation < violation_list[k]):
-                    #             violation_list.insert(k, neighbour_violation)
-                    #             candidate = neighbour
                     neighbour = state #return back to state
                         
             if (candidate.checkCube() >= violation):
