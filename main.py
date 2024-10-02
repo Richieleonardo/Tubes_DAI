@@ -12,9 +12,12 @@ iterations = 1000
 current = MagicCube(n)
 current.RandCube()
 #alg
-search1 = HillClimbing()
+search1 = HillClimbingSteepestAscent()
+search2 = HillClimbingSidewayMove()
+search3 = HillClimbingStochastic()
 
-current_state = search1.run(current)
+# current_state = search1.run(current)
+current_state = search3.run(current)
 current = current_state
 # print("Violated sum now : ", current_state.checkCube())
 

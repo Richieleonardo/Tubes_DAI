@@ -141,7 +141,7 @@ class MagicCube(object):
             neighbour.cube = flat_cube.reshape(self.n, self.n, self.n)
             return neighbour
         #else get random candidate
-        else:
+        elif mode == "random":
             candidate = []
             for i in range(n):
                 x1, x2= np.random.randint(low = 0, high = self.n**3, size = 2)
@@ -149,13 +149,6 @@ class MagicCube(object):
                 flat_cube[x1], flat_cube[x2] = flat_cube[x2], flat_cube[x1]
                 threeD_cube = flat_cube.reshape(self.n, self.n, self.n)
                 neighbour.cube = threeD_cube
-                # candidate.append(neighbour)
-                if not candidate:
-                    candidate.append(neighbour)
-                else:    
-                    for i in range(len(candidate)):
-                        if neighbour.checkCube() < candidate[i].checkCube():
-                            candidate.insert(i, threeD_cube)
-            return candidate[0]
+            return neighbour
         
         
