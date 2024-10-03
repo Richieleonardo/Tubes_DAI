@@ -48,7 +48,7 @@ class HillClimbingSidewayMove(object) : #Jump somewhere else when reaching shoul
     def run(self, init_state):
         state = init_state
         
-        jumplimit = 100
+        jumplimit = 5
         count = 0 # while condition i < jumpcount
         candidate = MagicCube(state.n)
         lowest_violation = 999
@@ -77,9 +77,9 @@ class HillClimbingSidewayMove(object) : #Jump somewhere else when reaching shoul
                 break
             elif (candidate.checkCube() == violation): #reaching 
                 #We make a jump by doing random swap to the magic cube
-                for i in range(5):
-                    neighbour = state.getNeighbour("random")
-                state = neighbour
+                # for i in range(5):
+                #     neighbour = state.getNeighbour("random")
+                state.PartialRand() #randomize 5 number at once
                 count += 1
                 print("Doing sideway jump : ", count, "time")
             else:
@@ -94,11 +94,11 @@ class HillClimbingStochastic(object) :
 
     def run(self, init_state):
         state = init_state
-        violation = state.checkCube()
+        violation = state.checkCube()  
         print("Initial violation : ", violation)
         for i in range (10000):
             neighbour = state.getNeighbour("random")
-            if neighbour.checkCube() > state.checkCube():
+            if neighbour.checkCube() < state.checkCube():
                 state = neighbour
         new_violation = state.checkCube()
         print("New violation : ", new_violation)        
@@ -109,34 +109,37 @@ class HillClimbingRandomRestart(object):
         self.name = "Hill Climbing Random Restart"
 
     def run(self, init_state):
-        return 0
-    
-class SimulatedAnnealing(object):
-    def __init__(self, initialTemp):
-        self.name = "Simulated Annealing" 
-        self.schedule = initialTemp #How long we want iteration to run
-
-    def run(self, init_state):
-        # t = 1
         state = init_state
-        while (self.schedule > 0) :
-            # T = self.schedule(t)
-            T *= 0.99
-
-            if (T == 0  or (state.checkCube() == 0)) :
-                return state
-            
-            next = state.getNeighbour("random")
-            delta_e = next.checkCube() - state.checkCube()
-
-            if (delta_e > 0) : #if successor better
-                state = next
-            else :
-                prob = math.exp(delta_e/T) 
-                if (prob >= random.random()) : #accept some succsesor that are worse
-                    state = next 
-            # t += 1
-
-    def scheduleFunction(t,initial_temperature = 1000, rate = 0.99):
-        output = initial_temperature*(rate**t)
-        return output
+        violation = state.checkCube()
+        
+        restart_limit = 10
+        count = 0
+        tempstate = MagicCube(init_state.n)
+        tempstate.cube = state.cube
+           
+        if(violation == 0):
+            return state
+        print("Initial violation : ", violation)
+        while count < restart_limit:
+            for i in range(10000): #10000 iteration of 10 different initial state
+                neighbour = state.getNeighbour("random")
+                if neighbour.checkCube() < state.checkCube():
+                    state = neighbour
+            if(state.checkCube() < tempstate.checkCube()):
+                tempstate.cube = state.cube
+            print("Random restart : ", count+1)
+            print("Temp violation : ", tempstate.checkCube())
+            state.RandCube()
+            count += 1
+        
+        state = tempstate
+        print("Final state has violation of : ", tempstate.checkCube())    
+        return state
+    
+class GeneticAlgorithm(object):
+    def __init__(self):
+        self.name = "Genetic Algorithm"
+    
+    
+    
+        

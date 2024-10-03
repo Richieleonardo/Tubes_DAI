@@ -3,6 +3,7 @@ Magic Cube
 '''
 
 import numpy as np
+import random
 
 # Magic Cube object of n x n x n range 1, n**3
 class MagicCube(object):
@@ -18,6 +19,17 @@ class MagicCube(object):
     def RandCube(self):
         self.cube = np.random.permutation(range(1, self.n**3+1)).reshape(self.n, self.n, self.n)
 
+    def PartialRand(self):
+        flat_cube = self.oneD_Cube()
+        start = random.randrange(1, len(flat_cube)-10)
+        end = start + 10
+        cube_slice = flat_cube[start:end+1]
+        # print(cube_slice)
+        random.shuffle(cube_slice)
+        # print(cube_slice)
+        flat_cube[start:end+1] = cube_slice
+        self.cube = flat_cube.reshape(self.n, self.n, self.n)
+        
     #objective function
     def checkCube(self):
         sum_violated = 0
@@ -135,8 +147,6 @@ class MagicCube(object):
         flat_cube = neighbour.oneD_Cube()
         #Swap or check specific neighbour
         if mode == "check":
-            # for i in range(len(flat_cube)-1):
-            #     for j in range(i+1, len(flat_cube), 1):
             flat_cube[x1], flat_cube[x2] = flat_cube[x2], flat_cube[x1]
             neighbour.cube = flat_cube.reshape(self.n, self.n, self.n)
             return neighbour

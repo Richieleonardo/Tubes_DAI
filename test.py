@@ -4,25 +4,30 @@ import numpy as np
 
 n = 5
 M = MagicCube(n)
-M.RandCube()
+# M.RandCube()
 
 print(M.cube)
-print("Initial violated : ", M.checkCube())
-violation_list = []
-state = M
-for i in range(n**3-1):
-    for j in range(i+1, n**3, 1):
-        neighbour = state.getNeighbour("check", i, j)
-        neighbour_violation = neighbour.checkCube()
-        if not violation_list: #if array empty
-            violation_list.append(neighbour_violation)
-        else:
-            for k in range(len(violation_list)):           
-                if(neighbour_violation < violation_list[k]):
-                    violation_list.insert(k, neighbour_violation)
-        neighbour = state
+print("\n")
+M.PartialRand()
+print("\n")
+print(M.cube)
+# print(M.cube)
+# print("Initial violated : ", M.checkCube())
+# violation_list = []
+# state = M
+# for i in range(n**3-1):
+#     for j in range(i+1, n**3, 1):
+#         neighbour = state.getNeighbour("check", i, j)
+#         neighbour_violation = neighbour.checkCube()
+#         if not violation_list: #if array empty
+#             violation_list.append(neighbour_violation)
+#         else:
+#             for k in range(len(violation_list)):           
+#                 if(neighbour_violation < violation_list[k]):
+#                     violation_list.insert(k, neighbour_violation)
+#         neighbour = state
 
-print(violation_list[0], violation_list[1], violation_list[2], violation_list[3], violation_list[5])
+# print(violation_list[0], violation_list[1], violation_list[2], violation_list[3], violation_list[5])
 # np.flip(M.cube)
 # print(M.cube)
 

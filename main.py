@@ -15,6 +15,7 @@ current.RandCube()
 search1 = HillClimbingSteepestAscent()
 search2 = HillClimbingSidewayMove()
 search3 = HillClimbingStochastic()
+search4 = HillClimbingRandomRestart()
 
 # current_state = search1.run(current)
 current_state = search3.run(current)
