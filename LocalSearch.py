@@ -1,5 +1,7 @@
 '''Local Search Algorithm'''
 from MagicCube import MagicCube
+import math
+import random
 
 """Hill Climbing"""
 
@@ -108,3 +110,33 @@ class HillClimbingRandomRestart(object):
 
     def run(self, init_state):
         return 0
+    
+class SimulatedAnnealing(object):
+    def __init__(self, initialTemp):
+        self.name = "Simulated Annealing" 
+        self.schedule = initialTemp #How long we want iteration to run
+
+    def run(self, init_state):
+        # t = 1
+        state = init_state
+        while (self.schedule > 0) :
+            # T = self.schedule(t)
+            T *= 0.99
+
+            if (T == 0  or (state.checkCube() == 0)) :
+                return state
+            
+            next = state.getNeighbour("random")
+            delta_e = next.checkCube() - state.checkCube()
+
+            if (delta_e > 0) : #if successor better
+                state = next
+            else :
+                prob = math.exp(delta_e/T) 
+                if (prob >= random.random()) : #accept some succsesor that are worse
+                    state = next 
+            # t += 1
+
+    def scheduleFunction(t,initial_temperature = 1000, rate = 0.99):
+        output = initial_temperature*(rate**t)
+        return output
