@@ -1,16 +1,18 @@
 
 from MagicCube import MagicCube
 import numpy as np
+import random
 
 n = 5
 M = MagicCube(n)
 # M.RandCube()
 
-print(M.cube)
-print("\n")
-M.PartialRand()
-print("\n")
-print(M.cube)
+# print(M.cube)
+# print("\n")
+# M.PartialRand()
+# print("\n")
+# print(M.cube)
+print(random.random())
 # print(M.cube)
 # print("Initial violated : ", M.checkCube())
 # violation_list = []

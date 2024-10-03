@@ -61,7 +61,7 @@ class HillClimbingSidewayMove(object) : #Jump somewhere else when reaching shoul
                 break
             # violation_list = [] #place all possible outcome and clear when loop go back
             lowest_violation = 999
-            # neighbour_list = []
+            neighbour_list = []
             for i in range(state.n**3 - 1):
                 for j in range(i+1, state.n**3, 1):
                     neighbour = state.getNeighbour("check", i, j)
@@ -70,6 +70,7 @@ class HillClimbingSidewayMove(object) : #Jump somewhere else when reaching shoul
                     if neighbour_violation < lowest_violation:
                         lowest_violation = neighbour_violation
                         candidate = neighbour
+                        neighbour_list.append(candidate)
                     neighbour = state #return back to state
             
             '''TO DO'''
@@ -77,10 +78,9 @@ class HillClimbingSidewayMove(object) : #Jump somewhere else when reaching shoul
                 break
             elif (candidate.checkCube() == violation): #reaching 
                 #We make a jump by doing random swap to the magic cube
-                # for i in range(5):
-                #     neighbour = state.getNeighbour("random")
-                state.PartialRand() #randomize 5 number at once
+                # state.PartialRand() #randomize 5 number at once
                 count += 1
+                neighbour_list[random.randint(1, count+1)]
                 print("Doing sideway jump : ", count, "time")
             else:
                 state = candidate #change current state to candidate cube
@@ -128,7 +128,7 @@ class HillClimbingRandomRestart(object):
             if(state.checkCube() < tempstate.checkCube()):
                 tempstate.cube = state.cube
             print("Random restart : ", count+1)
-            print("Temp violation : ", tempstate.checkCube())
+            print("Temporary violation : ", tempstate.checkCube())
             state.RandCube()
             count += 1
         
@@ -136,10 +136,43 @@ class HillClimbingRandomRestart(object):
         print("Final state has violation of : ", tempstate.checkCube())    
         return state
     
+class SimulatedAnnealing(object):
+    def __init__(self, initialTemp, stopTemp, beta):
+        self.name = "Simulated Annealing" 
+        self.beta = beta
+        self.temp = initialTemp #How long we want iteration to run
+        self.stopTemp = stopTemp #Limit on how low we want the temperature be (defautl = 0.00001)
+
+    def run(self, init_state):
+
+        #Param
+        euler = 2.71
+
+        state = init_state
+        print("Initial violation :", state.checkCube(), "Temperature : ", self.temp)
+        while (True) :
+
+            if (self.temp < self.stopTemp or (state.checkCube() == 0)) :
+                return state
+            
+            print("Initial violation :", state.checkCube(), "Temperature : ", self.temp)
+            next = state.getNeighbour("random")
+            delta_e = next.checkCube() - state.checkCube()
+            
+            if (delta_e < 0) : #if successor better
+                state = next
+                print("Successor found, violation : ", state.checkCube(), "Temperature : ", round(self.temp, 4))
+            else :
+                prob = euler**(delta_e/self.temp)
+                if (prob <= random.random()) : #accept some succsesor that are worse
+                    state = next 
+                    print("Random successor accepted, current violation : ", state.checkCube(), "Temperature : ", round(self.temp, 4))
+            
+            #Cooling function
+            self.temp = self.temp *(1+(self.beta*self.temp))**-1
+            # self.temp = self.temp - 0.1
+        
+    
 class GeneticAlgorithm(object):
     def __init__(self):
         self.name = "Genetic Algorithm"
-    
-    
-    
-        
